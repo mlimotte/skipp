@@ -9,16 +9,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
-//# Terraform S3 Backend (for state storage)
-//terraform {
-//  backend "s3" {
-//    bucket = "skipp-terraform"
-//    key = "state"
-//    region = "us-east-1"
-//    encrypt = true
-//    dynamodb_table = "terraform-lock"
-//  }
-//}
+# Terraform S3 Backend (for state storage)
+terraform {
+  backend "s3" {
+    bucket = "skipp-terraform"
+    key = "state"
+    region = "us-east-1"
+    encrypt = true
+    dynamodb_table = "terraform-lock"
+  }
+}
 
 # AWS password policy
 
