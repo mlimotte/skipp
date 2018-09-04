@@ -21,4 +21,7 @@ instance_type = "t2.micro"
 #   AWS command line tools, Python, Ruby, Perl, and Java. The repositories include Docker, PHP,
 #   MySQL, PostgreSQL, and other packages.
 # Root device type: ebs, Virtualization type: hvm, ENA Enabled: Yes
-ecs_aws_ami = "ami-0ff8a91507f77f867"
+
+# An amazon-ecs-optimized AMI for us-east-1
+# See AMI list here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html
+ecs_aws_ami = "ami-00129b193dc81bc31"

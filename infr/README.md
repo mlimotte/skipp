@@ -51,3 +51,17 @@ To apply changes:
 3. If your resource name includes an environment specifier, e.g. "qa1"; add that as a
    prefix (not suffix): "qa1_*"
 
+# Free Tier -- Instance
+
+The free tier includes 1 t2.micro EC2 instance.
+We have it set up as a ECS instance, and allow direct ssh access, which is insecure, but 
+keeps us within the Free Tier set up with no bastion server.
+
+You can connect to this instance and use docker to see what's running. In particular, 
+the `amazon/amazon-ecs-agent` container should be running.
+
+Example: 
+
+    # Note: public hostname will vary
+    $ ssh -i ~/.ssh/skipp_prod_rsa ec2-user@ec2-18-208-224-193.compute-1.amazonaws.com
+    >> $ docker ps
