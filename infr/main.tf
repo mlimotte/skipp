@@ -21,9 +21,7 @@ terraform {
 }
 
 # AWS password policy
-
-# A very liberal policy ...
-resource "aws_iam_account_password_policy" "strict" {
+resource "aws_iam_account_password_policy" "liberal" {
   max_password_age = 90
   minimum_password_length        = 8
   require_lowercase_characters   = true
