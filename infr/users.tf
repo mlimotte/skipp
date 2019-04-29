@@ -76,6 +76,15 @@ resource "aws_iam_policy" "engineering" {
         "Effect": "Allow",
         "Action": "autoscaling:Describe*",
         "Resource": "*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl", "s3:DeleteObject",
+                    "s3:GetObjectAcl", "s3:GetObjectVersionAcl", "s3:GetBucketAcl" ],
+        "Resource": [
+          "arn:aws:s3:::skipp-xfer/*",
+          "arn:aws:s3:::skipp-data/*"
+        ]
     }
   ]
 }
@@ -85,6 +94,38 @@ EOF
 resource "aws_iam_group_policy_attachment" "engineering" {
   group      = "${aws_iam_group.engineering.id}"
   policy_arn = "${aws_iam_policy.engineering.arn}"
+}
+
+## Group: Product
+
+resource "aws_iam_group" "product" {
+  name = "product"
+  path = "/users/"
+}
+
+resource "aws_iam_policy" "product" {
+  name   = "product"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+        "Effect": "Allow",
+        "Action": [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl", "s3:DeleteObject",
+                    "s3:GetObjectAcl", "s3:GetObjectVersionAcl", "s3:GetBucketAcl" ],
+        "Resource": [
+          "arn:aws:s3:::skipp-xfer/*",
+          "arn:aws:s3:::skipp-data/*"
+        ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_group_policy_attachment" "product" {
+  group      = "${aws_iam_group.product.id}"
+  policy_arn = "${aws_iam_policy.product.arn}"
 }
 
 # Users
@@ -112,15 +153,65 @@ resource "aws_iam_user_group_membership" "marc" {
   ]
 }
 
-# Jose Garza
-resource "aws_iam_user" "jose" {
-  name = "jose"
+# Adrian von der Osten <adrian@skipp.ai>
+resource "aws_iam_user" "adrian" {
+  name = "adrian"
 }
-resource "aws_iam_user_group_membership" "jose" {
-  user = "${aws_iam_user.jose.name}"
+resource "aws_iam_user_group_membership" "adrian" {
+  user = "${aws_iam_user.adrian.name}"
   groups = [
     "${aws_iam_group.employee.name}",
-    "${aws_iam_group.engineering.name}",
+    "${aws_iam_group.product.name}",
   ]
 }
+
+# paperspace
+# For use by the paperspace machine. Primarliy for S3 access to move files back and forth.
+resource "aws_iam_user" "paperspace" {
+  name = "paperspace"
+}
+resource "aws_iam_policy" "paperspace" {
+  name   = "paperspace"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+        "Effect": "Allow",
+        "Action": [ "s3:GetObject", "s3:PutObject", "s3:DeleteObject",
+                    "s3:GetObjectAcl", "s3:GetObjectVersionAcl", "s3:GetBucketAcl",
+                    "s3:List*" ],
+        "Resource": [
+          "arn:aws:s3:::skipp-xfer/*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [ "s3:ListBucket" ],
+        "Resource": [
+          "arn:aws:s3:::skipp-xfer"
+        ]
+    }
+
+  ]
+}
+EOF
+}
+resource "aws_iam_user_policy_attachment" "paperspace" {
+  user       = "${aws_iam_user.paperspace.id}"
+  policy_arn = "${aws_iam_policy.paperspace.arn}"
+}
+
+
+//# Jose Garza
+//resource "aws_iam_user" "jose" {
+//  name = "jose"
+//}
+//resource "aws_iam_user_group_membership" "jose" {
+//  user = "${aws_iam_user.jose.name}"
+//  groups = [
+//    "${aws_iam_group.employee.name}",
+//    "${aws_iam_group.engineering.name}",
+//  ]
+//}
 

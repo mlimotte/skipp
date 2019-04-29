@@ -44,3 +44,8 @@ resource "aws_s3_bucket" "skipp-data" {
   bucket = "skipp-data"
   force_destroy = false
 }
+
+resource "aws_s3_bucket" "skipp-xfer" {
+  bucket = "skipp-xfer"
+  force_destroy = false
+}
