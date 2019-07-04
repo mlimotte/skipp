@@ -40,6 +40,22 @@ resource "aws_iam_group_policy_attachment" "employee_group_user_creds_policy_att
   policy_arn = "${aws_iam_policy.user_credential_mgmt.arn}"
 }
 
+## Group: Devops
+
+resource "aws_iam_group" "devops" {
+  name = "devops"
+  path = "/users/"
+}
+
+data "aws_iam_policy" "admin_datomic1_us_east_1" {
+  arn = "arn:aws:iam::390156831897:policy/datomic-admin-datomic1-us-east-1"
+}
+
+resource "aws_iam_group_policy_attachment" "devops_group_user_creds_policy_attach" {
+  group = aws_iam_group.devops.id
+  policy_arn = data.aws_iam_policy.admin_datomic1_us_east_1.arn
+}
+
 ## Group: Engineering
 
 resource "aws_iam_group" "engineering" {
@@ -201,17 +217,4 @@ resource "aws_iam_user_policy_attachment" "paperspace" {
   user       = "${aws_iam_user.paperspace.id}"
   policy_arn = "${aws_iam_policy.paperspace.arn}"
 }
-
-
-//# Jose Garza
-//resource "aws_iam_user" "jose" {
-//  name = "jose"
-//}
-//resource "aws_iam_user_group_membership" "jose" {
-//  user = "${aws_iam_user.jose.name}"
-//  groups = [
-//    "${aws_iam_group.employee.name}",
-//    "${aws_iam_group.engineering.name}",
-//  ]
-//}
 

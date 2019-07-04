@@ -3,7 +3,7 @@
 
 # AWS Provider
 provider "aws" {
-  version = "~> 1.34"
+  version = "~> 2.0"
   access_key = "${var.skipp_access_key}"
   secret_key = "${var.skipp_secret_key}"
   region = "us-east-1"

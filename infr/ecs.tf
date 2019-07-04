@@ -42,6 +42,7 @@ data "aws_ami" "amazon_linux_ecs" {
     values = [
       "amazon"]
   }
+  owners = ["amazon"]
 }
 
 resource "aws_key_pair" "prod_ecs" {
@@ -112,7 +113,7 @@ resource "aws_iam_role_policy_attachment" "cluster_service" {
 # security groups (free) instead of vpc (NAT $30/mo)
 
 resource "aws_default_vpc" "default" {
-  tags {
+  tags = {
     Name = "Default VPC"
   }
 }

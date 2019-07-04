@@ -6,7 +6,7 @@ locals {
 resource "aws_cloudwatch_log_group" "ecs_bridge" {
   # This log group is targeted by the TaskDef containerDefinitions
   name = "/${var.environment}/ecs/${local.service_name}"
-  tags {
+  tags = {
     Environment = "${var.environment}"
     Application = "${local.service_name}"
   }
@@ -43,8 +43,27 @@ resource "aws_iam_role" "bridge" {
   assume_role_policy    = "${file("ecs-tasks-assume-role-policy.json")}"
 }
 
-// TODO attach additional policies as needed
-//resource "aws_iam_role_policy_attachment" "s3_foo_bucket" {
-//  role = "${aws_iam_role.bridge.name}"
-//  policy_arn = "${var.s3_foo_bucket_r_arn}"
-//}
+resource "aws_iam_policy" "bridge" {
+  name   = "bridge"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+        "Effect": "Allow",
+        "Action": [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl", "s3:DeleteObject",
+                    "s3:GetObjectAcl", "s3:GetObjectVersionAcl", "s3:GetBucketAcl" ],
+        "Resource": [
+          "arn:aws:s3:::skipp-data/*"
+        ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "s3_skipp-data" {
+  role = "${aws_iam_role.bridge.name}"
+  policy_arn = "${aws_iam_policy.bridge.arn}"
+}
+
