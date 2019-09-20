@@ -112,37 +112,37 @@ resource "aws_iam_group_policy_attachment" "engineering" {
   policy_arn = "${aws_iam_policy.engineering.arn}"
 }
 
-## Group: Product
-
-resource "aws_iam_group" "product" {
-  name = "product"
-  path = "/users/"
-}
-
-resource "aws_iam_policy" "product" {
-  name   = "product"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-        "Effect": "Allow",
-        "Action": [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl", "s3:DeleteObject",
-                    "s3:GetObjectAcl", "s3:GetObjectVersionAcl", "s3:GetBucketAcl" ],
-        "Resource": [
-          "arn:aws:s3:::skipp-xfer/*",
-          "arn:aws:s3:::skipp-data/*"
-        ]
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_group_policy_attachment" "product" {
-  group      = "${aws_iam_group.product.id}"
-  policy_arn = "${aws_iam_policy.product.arn}"
-}
+//## Group: Product
+//
+//resource "aws_iam_group" "product" {
+//  name = "product"
+//  path = "/users/"
+//}
+//
+//resource "aws_iam_policy" "product" {
+//  name   = "product"
+//  policy = <<EOF
+//{
+//  "Version": "2012-10-17",
+//  "Statement": [
+//    {
+//        "Effect": "Allow",
+//        "Action": [ "s3:GetObject", "s3:PutObject", "s3:PutObjectAcl", "s3:DeleteObject",
+//                    "s3:GetObjectAcl", "s3:GetObjectVersionAcl", "s3:GetBucketAcl" ],
+//        "Resource": [
+//          "arn:aws:s3:::skipp-xfer/*",
+//          "arn:aws:s3:::skipp-data/*"
+//        ]
+//    }
+//  ]
+//}
+//EOF
+//}
+//
+//resource "aws_iam_group_policy_attachment" "product" {
+//  group      = "${aws_iam_group.product.id}"
+//  policy_arn = "${aws_iam_policy.product.arn}"
+//}
 
 # Users
 
@@ -169,17 +169,17 @@ resource "aws_iam_user_group_membership" "marc" {
   ]
 }
 
-# Adrian von der Osten <adrian@skipp.ai>
-resource "aws_iam_user" "adrian" {
-  name = "adrian"
-}
-resource "aws_iam_user_group_membership" "adrian" {
-  user = "${aws_iam_user.adrian.name}"
-  groups = [
-    "${aws_iam_group.employee.name}",
-    "${aws_iam_group.product.name}",
-  ]
-}
+//# Adrian von der Osten <adrian@skipp.ai>
+//resource "aws_iam_user" "adrian" {
+//  name = "adrian"
+//}
+//resource "aws_iam_user_group_membership" "adrian" {
+//  user = "${aws_iam_user.adrian.name}"
+//  groups = [
+//    "${aws_iam_group.employee.name}",
+//    "${aws_iam_group.product.name}",
+//  ]
+//}
 
 //# Adam Swietek <adam@skipp.ai>
 //resource "aws_iam_user" "adam" {
