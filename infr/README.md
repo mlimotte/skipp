@@ -1,3 +1,8 @@
+# 
+# OBSOLETE
+# This terraform project is obsolete.  Use common_cdk instead.
+#
+
 # Install terraform
 
 On a Mac, use Homebrew:

@@ -1,7 +1,7 @@
-output "alb_target_group_arn" {
-  value = "${aws_alb_target_group.default.arn}"
-}
-
-output "cluster" {
-  value = "${aws_ecs_cluster.prod.name}"
-}
+//output "alb_target_group_arn" {
+//  value = "${aws_alb_target_group.default.arn}"
+//}
+//
+//output "cluster" {
+//  value = "${aws_ecs_cluster.prod.name}"
+//}

@@ -20,16 +20,16 @@ terraform {
   }
 }
 
-# AWS password policy
-# Note: In cloudformation, this looks like: https://s3.amazonaws.com/aws-configservice-us-east-1/cloudformation-templates-for-managed-rules/IAM_PASSWORD_POLICY.template
-resource "aws_iam_account_password_policy" "liberal" {
-//  max_password_age = 90
-  minimum_password_length        = 8
-  require_lowercase_characters   = true
-  require_uppercase_characters   = false
-  require_numbers                = false
-  allow_users_to_change_password = true
-}
+//# AWS password policy
+//# Note: In cloudformation, this looks like: https://s3.amazonaws.com/aws-configservice-us-east-1/cloudformation-templates-for-managed-rules/IAM_PASSWORD_POLICY.template
+//resource "aws_iam_account_password_policy" "liberal" {
+////  max_password_age = 90
+//  minimum_password_length        = 8
+//  require_lowercase_characters   = true
+//  require_uppercase_characters   = false
+//  require_numbers                = false
+//  allow_users_to_change_password = true
+//}
 
 ####################
 ### Base resources
@@ -41,12 +41,12 @@ resource "aws_s3_bucket" "skipp-terraform" {
   force_destroy = false
 }
 
-resource "aws_s3_bucket" "skipp-data" {
-  bucket = "skipp-data"
-  force_destroy = false
-}
-
-resource "aws_s3_bucket" "skipp-xfer" {
-  bucket = "skipp-xfer"
-  force_destroy = false
-}
+//resource "aws_s3_bucket" "skipp-data" {
+//  bucket = "skipp-data"
+//  force_destroy = false
+//}
+//
+//resource "aws_s3_bucket" "skipp-xfer" {
+//  bucket = "skipp-xfer"
+//  force_destroy = false
+//}
